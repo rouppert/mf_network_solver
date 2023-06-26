@@ -4,14 +4,14 @@ import java.util.List;
 /*
 Represents an element, channel or module, of a microfluidic network.
  */
-public class Element {
-    private final List<Element> successors;
+public class Module {
+    private final List<Module> successors;
     private final String name;
     private final int length;
     private final boolean def;
 
     // ---- Getters ----
-    public List<Element> getSuccessors() {
+    public List<Module> getSuccessors() {
         return successors;
     }
 
@@ -28,14 +28,14 @@ public class Element {
     }
     // ------------
 
-    public Element(String name, int length, boolean def) {
+    public Module(String name, int length, boolean def) {
         this.name = name;
         this.length = length;
         this.def = def;
         this.successors = new ArrayList<>();
     }
 
-    public void addSuccessor(Element successor) {
+    public void addSuccessor(Module successor) {
         successors.add(successor);
     }
 }

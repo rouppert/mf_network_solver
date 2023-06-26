@@ -1,27 +1,29 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+/*
+Represents a path between two elements of the network.
+ */
 public class Path {
-    private final List<Element> members;
-    private final List<Element> nonDefaults;
+    private final List<Module> members;
+    private final List<Module> nonDefaults;
     private int StartTime;
 
-    public List<Element> getNonDefaults() {
+    public List<Module> getNonDefaults() {
         return nonDefaults;
     }
 
-    public Path(List<Element> members) {
+    public Path(List<Module> members) {
         this.members = members;
         this.nonDefaults = new ArrayList<>();
-        for (Element current : members) {
+        for (Module current : members) {
             if (current.isDef()) {
                 nonDefaults.add(current);
             }
         }
     }
 
-    public void addMember(Element newMember) {
+    public void addMember(Module newMember) {
         members.add(newMember);
     }
 
