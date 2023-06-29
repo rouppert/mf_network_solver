@@ -12,8 +12,18 @@ import java.util.*;
 Represents a droplet-based microfluidic network.
  */
 public class Network {
+    /*
+    All the elements of the network (sensors or modules).
+    Each of the elements has a unique ID.
+     */
     private final Map<Integer, Module> modules;
+    /*
+    The origin of the network, i.e the module that the droplets enter first in the network.
+     */
     private Module origin;
+    /*
+    The waste chamber, i.e the module through which the droplets quit the network.
+     */
     private Module wasteChamber;
 
     public Module getOrigin() {
@@ -36,6 +46,11 @@ public class Network {
         this.modules = new HashMap<>();
     }
 
+    /*
+    Adds a new module to the network, and if necessary, updates the value of the origin
+    or of the waste chamber.
+     */
+
     public void addModule(int ID, Module module) {
         if(Objects.equals(module.getName(), "origin")) {
             setOrigin(module);
@@ -45,6 +60,15 @@ public class Network {
         modules.put(ID, module);
     }
 
+
+    /*
+    Generates a new network following the structure described in an XML file.
+    This file is basically a set of nodes, each one of them describing a module,
+    especially by giving all its successors (all the modules connected to its output)
+    in the network.
+    @param filename
+        The name of the file to read.
+     */
     public void generateFromXml(String filename) {
         File file = new File(filename);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -93,6 +117,13 @@ public class Network {
 
     }
 
+    /*
+    Generates a path for the payload by reading an XML file.
+    This file is just a set of nodes, each one of the nodes being on element of the path.
+    The order of the nodes is important, as the order of the elements in the path will
+    be the same.
+    @return The path of the payload represented by an instance of the class Path.
+     */
     public Path generatePlPathFromXml(String filename) {
         File file = new File(filename);
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -119,6 +150,10 @@ public class Network {
         }
     }
 
+    /*
+    Simply prints the network in a nice way in the terminal.
+    For test purposes.
+     */
     public void printNetwork() {
         for (Map.Entry<Integer, Module> entry : modules.entrySet()) {
             Module module = entry.getValue();
@@ -131,6 +166,17 @@ public class Network {
         }
     }
 
+    /*
+    Used to find all the paths that a header can follow to reach a non-default
+    channel.
+
+    Generates all the possible paths from one module origin to a module target.
+    Uses a very simple algorithm : walks over the network from the origin until
+    if finds the target or the waste chamber. Each time you pass through a branch
+    line, a new path is generated. We return all the paths whose final module is
+    the target.
+    @return A list of all the possible paths.
+     */
     public List<Path> generatePathsToTarget(Module origin, Module target) {
         List<Path> possiblePaths = new ArrayList<>();
         List<Path> defintivePaths = new ArrayList<>();
@@ -170,6 +216,19 @@ public class Network {
         return defintivePaths;
     }
 
+    /*
+    Given the path we want the payload to follow, calculates all the headers needed
+    and their respective starTimes.
+
+    Uses the algorithm described in section IV. of the papers :
+    - generate a candidate sequence, holding the path of the payload and the paths of
+    the headers.
+    - for each of the path, calculates the required startTime, considering the path of
+    the non-default droplet it is supposed to block.
+
+    @param level
+        is incremented if a simulation fails, meaning that we start  testing less optimal paths.
+     */
     public List<Integer> generateStartTimes(Path plPath, int level) {
         List<Integer> startTimes = new ArrayList<>();
         startTimes.add(0);
