@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Modules>
+
+    <!-- Canal c1 -->
+    <module ID="0">
+        <name>origin</name>
+        <hLength>2</hLength>
+        <pLength>2</pLength>
+        <def>True</def>
+        <successor ID="1">
+            <name>mixing chamber</name>
+        </successor>
+        <successor ID="2">
+            <name>c2</name>
+        </successor>
+    </module>
+
+    <!-- Mixing chamber -->
+    <module ID="1">
+        <name>mixing chamber</name>
+        <hLength>0</hLength>
+        <pLength>14</pLength>
+        <def>True</def>
+        <successor ID="3">
+            <name>c3</name>
+        </successor>
+    </module>
+
+    <!-- Canal c2 -->
+    <module ID="2">
+        <name>c2</name>
+        <hLength>26</hLength>
+        <pLength>0</pLength>
+        <def>True</def>
+        <successor ID="3">
+            <name>c3</name>
+        </successor>
+    </module>
+
+    <!-- Canal c3 -->
+    <module ID="3">
+        <name>c3</name>
+        <hLength>2</hLength>
+        <pLength>2</pLength>
+        <def>True</def>
+        <successor ID="4">
+            <name>c4</name>
+        </successor>
+        <successor ID="5">
+            <name>c5</name>
+        </successor>
+    </module>
+
+    <!-- Canal c4 -->
+    <module ID="4">
+        <name>c4</name>
+        <hLength>3</hLength>
+        <pLength>3</pLength>
+        <def>True</def>
+        <successor ID="6">
+            <name>c6</name>
+        </successor>
+    </module>
+
+    <!-- Canal c5 -->
+    <module ID="5">
+        <name>c5</name>
+        <hLength>4</hLength>
+        <pLength>4</pLength>
+        <def>False</def>
+        <successor ID="10">
+            <name>c7</name>
+        </successor>
+    </module>
+
+    <!-- Canal c6 -->
+    <module ID="6">
+        <name>c6</name>
+        <hLength>2</hLength>
+        <pLength>2</pLength>
+        <def>True</def>
+        <successor ID="7">
+            <name>heating module</name>
+        </successor>
+        <successor ID="8">
+            <name>c8</name>
+        </successor>
+    </module>
+
+    <!-- Heating module -->
+    <module ID="7">
+        <name>heating module</name>
+        <hLength>0</hLength>
+        <pLength>18</pLength>
+        <def>True</def>
+        <successor ID="9">
+            <name>c9</name>
+        </successor>
+    </module>
+
+    <!-- Canal c8 -->
+    <module ID="8">
+        <name>c8</name>
+        <hLength>32</hLength>
+        <pLength>0</pLength>
+        <def>True</def>
+        <successor ID="9">
+            <name>c9</name>
+        </successor>
+    </module>
+
+    <!-- Canal c9 -->
+    <module ID="9">
+        <name>c9</name>
+        <hLength>2</hLength>
+        <pLength>2</pLength>
+        <def>True</def>
+        <successor ID="11">
+            <name>c10</name>
+        </successor>
+    </module>
+
+    <!-- Canal c7 -->
+    <module ID="10">
+        <name>c7</name>
+        <hLength>171</hLength>
+        <pLength>170</pLength>
+        <def>True</def>
+        <successor ID="11">
+            <name>c10</name>
+        </successor>
+    </module>
+
+    <!-- Canal c10 -->
+    <module ID="11">
+        <name>waste chamber</name>
+        <hLength>3</hLength>
+        <pLength>3</pLength>
+        <def>True</def>
+    </module>
+
+
+</Modules>
+
