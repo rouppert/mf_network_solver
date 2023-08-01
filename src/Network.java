@@ -8,20 +8,26 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.*;
 
-/*
+/**
 Represents a droplet-based microfluidic network.
+This class offers methods to :
+<ul>
+ <li>Generate all the possible paths from the origin to a given node</li>
+ <li>Generate the start times for the headers for a given experiment</li>
+ <li>Generate the solution for a network and an experiment both represented by an XML file</li>
+</ul>
  */
 public class Network {
-    /*
+    /**
     All the elements of the network (sensors or modules).
     Each of the elements has a unique ID.
      */
     private final Map<Integer, Module> modules;
-    /*
+    /**
     The origin of the network, i.e the module that the droplets enter first in the network.
      */
     private Module origin;
-    /*
+    /**
     The waste chamber, i.e the module through which the droplets quit the network.
      */
     private Module wasteChamber;
@@ -46,7 +52,7 @@ public class Network {
         this.modules = new HashMap<>();
     }
 
-    /*
+    /**
     Adds a new module to the network, and if necessary, updates the value of the origin
     or of the waste chamber.
      */
@@ -61,7 +67,7 @@ public class Network {
     }
 
 
-    /*
+    /**
     Generates a new network following the structure described in an XML file.
     This file is basically a set of nodes, each one of them describing a module,
     especially by giving all its successors (all the modules connected to its output)
@@ -117,7 +123,7 @@ public class Network {
 
     }
 
-    /*
+    /**
     Generates a path for the payload by reading an XML file.
     This file is just a set of nodes, each one of the nodes being on element of the path.
     The order of the nodes is important, as the order of the elements in the path will
@@ -150,7 +156,7 @@ public class Network {
         }
     }
 
-    /*
+    /**
     Simply prints the network in a nice way in the terminal.
     For test purposes.
      */
@@ -166,7 +172,7 @@ public class Network {
         }
     }
 
-    /*
+    /**
     Used to find all the paths that a header can follow to reach a non-default
     channel.
 
@@ -216,7 +222,7 @@ public class Network {
         return defintivePaths;
     }
 
-    /*
+    /**
     Given the path we want the payload to follow, calculates all the headers needed
     and their respective starTimes.
 
@@ -286,13 +292,7 @@ public class Network {
         Collections.sort(startTimes);
         Simulation sim = new Simulation(this, startTimes, 100);
         System.out.println(startTimes);
-        /*
-        while (!sim.checkConsistency()) {
-            level++;
-            startTimes = generateStartTimes(plPath, level);
-            sim = new Simulation(this, startTimes, 100);
-        }
-         */
+        System.out.println(sim.check());
         return startTimes;
     }
 }

@@ -9,13 +9,30 @@ public class Payload extends Droplet {
         if(currentStep - getEntryTime() > getCurrentModule().getPayloadLength()) {
             List<Module> successors = getCurrentModule().getSuccessors();
             if(!successors.isEmpty()) {
-                int minLength = 0;
-                for (Module successor : successors) {
+                int i = 0;
+                boolean found = false;
+                Module curr = null;
+                while (i < successors.size()) {
+                    Module successor = successors.get(i);
                     int length = successor.getPayloadLength();
-                    if (length < minLength && !successor.isOccupied()) {
-                        minLength = length;
-                        setCurrentModule(successor);
+                    if (length > 0 && !successor.isOccupied()) {
+                        curr = successor;
+                        found = true;
+                        break;
                     }
+                    i++;
+                }
+
+                if(found) {
+                    for (Module successor : successors) {
+                        int minLength = curr.getPayloadLength();
+                        int length = successor.getPayloadLength();
+                        if (length < minLength && !successor.isOccupied()) {
+                            curr = successor;
+                        }
+                    }
+                    setNewModule(curr);
+                    setNewEntryTime(currentStep);
                 }
             }
         }

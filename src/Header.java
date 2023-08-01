@@ -8,18 +8,33 @@ public class Header extends Droplet {
 
     public void move (int currentStep) {
         if(currentStep - getEntryTime() > getCurrentModule().getHeaderLength()) {
-            getCurrentModule().setOccupied(false);
             List<Module> successors = getCurrentModule().getSuccessors();
             if(!successors.isEmpty()) {
-                int minLength = 0;
-                for (Module successor : successors) {
+                int i = 0;
+                boolean found = false;
+                Module curr = null;
+                while (i < successors.size()) {
+                    Module successor = successors.get(i);
                     int length = successor.getHeaderLength();
-                    if (length < minLength && !successor.isOccupied()) {
-                        minLength = length;
-                        setCurrentModule(successor);
+                    if (length > 0 && !successor.isOccupied()) {
+                        curr = successor;
+                        found = true;
+                        break;
                     }
+                    i++;
                 }
-                getCurrentModule().setOccupied(true);
+
+                if(found) {
+                    for (Module successor : successors) {
+                        int minLength = curr.getHeaderLength();
+                        int length = successor.getHeaderLength();
+                        if (length < minLength && !successor.isOccupied()) {
+                            curr = successor;
+                        }
+                    }
+                    setNewModule(curr);
+                    setNewEntryTime(currentStep);
+                }
             }
         }
     }
